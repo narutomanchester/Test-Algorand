@@ -1,0 +1,78 @@
+#pragma version 5
+txn ApplicationID
+int 0
+==
+bnz main_l14
+txn OnCompletion
+int OptIn
+==
+bnz main_l13
+txn OnCompletion
+int CloseOut
+==
+bnz main_l12
+txn OnCompletion
+int UpdateApplication
+==
+bnz main_l11
+txn OnCompletion
+int DeleteApplication
+==
+bnz main_l10
+txn OnCompletion
+int NoOp
+==
+bnz main_l7
+err
+main_l7:
+global GroupSize
+int 1
+==
+txna ApplicationArgs 0
+byte "add_pool"
+==
+&&
+bnz main_l9
+err
+main_l9:
+byte "total_alloc_point"
+app_global_get
+store 0
+byte "total_alloc_point"
+load 0
+txna ApplicationArgs 1
+btoi
++
+app_global_put
+int 1
+return
+main_l10:
+int 0
+return
+main_l11:
+int 0
+return
+main_l12:
+int 0
+return
+main_l13:
+int 0
+return
+main_l14:
+byte "bonus_end_block"
+int 1865950900
+app_global_put
+byte "DIM_per_block"
+int 10
+app_global_put
+byte "BONUS_MULTIPLIER"
+int 10
+app_global_put
+byte "total_alloc_point"
+int 0
+app_global_put
+byte "start_block"
+int 18662546
+app_global_put
+int 1
+return
